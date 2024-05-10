@@ -24,6 +24,12 @@ class menuadmin extends BaseController
     }
     public function index(): string
     {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Home');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuatasan');
+        }
         return view('admin/index');
     }
     public function datakendaraan()
@@ -116,6 +122,14 @@ public function prosespesan(){
             'id_atasan'       => $atasan
         ]
     );
+    $db      = \Config\Database::connect();
+        $builder = $db->table('tb_kendaraan');
+        $builder->where('id_kendaraan', $kendaraan);
+        $builder->update(
+            [
+                'status' => 'Dipesan',
+            ]
+        );
     return redirect()->to('/menuadmin/dipesan');
 }
 
@@ -135,6 +149,191 @@ public function prosespesan(){
             'disetujui' => $disetujui
         ];
         return view('admin/disetujui',$data);
+    }
+    public function prosessetuju($id_setuju)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Home');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuatasan');
+        }
+        $id_kendaraan = $this->request->getVar('kendaraan');
+        $db      = \Config\Database::connect();
+        $builder = $db->table('tb_kendaraan');
+        $builder->where('id_kendaraan', $id_kendaraan);
+        $builder->update(
+            [
+                'status' => 'Ada',
+            ]
+        );
+        $this->ModelPesanDisetujui->delete($id_setuju);
+        return redirect()->to('/menuadmin/disetujui');
+    }
+    public function tambahkendaraan()
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Home');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuatasan');
+        }
+        
+        return view('admin/tambahkendaraan');
+    }
+    public function prosestambah()
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Home');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuatasan');
+        }
+        $nama = $this->request->getVar('nama');
+        $no = $this->request->getVar('no');
+        $jenis = $this->request->getVar('jenis');
+        $status = 'Ada';
+        $this->ModelKendaraan->save(
+            [
+                'nama_kendaraan' => $nama,
+                'no_plat' => $no,
+                'jenis_kendaraan' => $jenis,
+                'status' => $status
+            ]
+        );
+        session()->setFlashdata('pesan', 'Data Berhasil di tambah');
+        return redirect()->to('/menuadmin/datakendaraan');
+    }
+    public function delete_kendaraan($id_kendaraan)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        $this->ModelKendaraan->delete($id_kendaraan);
+
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus');
+        return redirect()->to('/menuadmin/datakendaraan');
+    }
+    public function edit($id_kendaraan)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        $kendaraan = $this->ModelKendaraan->find($id_kendaraan);
+        $data = [
+            'title' => 'Data Pesanan',
+            'kendaraan' => $kendaraan
+        ];
+        return view('admin/editkendaraan', $data);
+    }
+    public function update($id_kendaraan)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        $nama = $this->request->getVar('nama');
+        $no = $this->request->getVar('no');
+        $jenis = $this->request->getVar('jenis');
+        $db      = \Config\Database::connect();
+        $builder = $db->table('tb_kendaraan');
+        $builder->where('id_kendaraan', $id_kendaraan);
+        $builder->update(
+            [
+                'nama_kendaraan' => $nama,
+                'no_plat' => $no,
+                'jenis_kendaraan' => $jenis
+            ]
+        );
+        session()->setFlashdata('pesan', 'Data Berhasil di edit');
+        return redirect()->to('/menuadmin/datakendaraan');
+    }
+    public function tbhdriver()
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        return view('admin/tambahdatadriver');
+    }
+    public function prosestambahdriver()
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Home');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuatasan');
+        }
+        $nama = $this->request->getVar('nama');
+        $no = $this->request->getVar('no');
+        $this->ModelDriver->save(
+            [
+                'nama_driver' => $nama,
+                'no_hp' => $no
+            ]
+        );
+        session()->setFlashdata('pesan', 'Data Berhasil di tambah');
+        return redirect()->to('/menuadmin/datadriver');
+    }
+    public function delete_driver($id_driver)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        $this->ModelDriver->delete($id_driver);
+
+        session()->setFlashdata('pesan', 'Data Berhasil dihapus');
+        return redirect()->to('/menuadmin/datadriver');
+    }
+    public function editdriver($id_driver)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        $driver = $this->ModelDriver->find($id_driver);
+        $data = [
+            'title' => 'Data Pesanan',
+            'driver' => $driver
+        ];
+        return view('admin/editdriver', $data);
+    }
+    public function updatedriver($id_driver)
+    {
+        if (!$this->session->has('logged_in')) {
+            return redirect()->to('/Login');
+        }
+        if ($this->session->get('idlevel') != 2) {
+            return redirect()->to('/menuadmin');
+        }
+        $nama = $this->request->getVar('nama');
+        $no = $this->request->getVar('no');
+        $db      = \Config\Database::connect();
+        $builder = $db->table('tb_driver');
+        $builder->where('id_driver', $id_driver);
+        $builder->update(
+            [
+                'nama_driver' => $nama,
+                'no_hp' => $no
+            ]
+        );
+        session()->setFlashdata('pesan', 'Data Berhasil di edit');
+        return redirect()->to('/menuadmin/datadriver');
     }
     public function laporan()
     {

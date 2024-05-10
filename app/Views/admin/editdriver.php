@@ -151,7 +151,8 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Pesanan Kendaraan Disetujui</h1>
+                        <h1 class="h3 mb-0 text-gray-800">Edit Data Driver</h1>
+                        
                     </div>
 
                     <!-- Content Row -->
@@ -169,37 +170,24 @@
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Content Column -->
-                        <div class=" mb-4">
-
-                        <table class="table table-bordered table-hover" >
-                            <tr class="info" align="center">
-                                <th>#</th>
-                                <th>Nama Kendaraan</th>
-                                <th>Nama Driver</th>
-                                <th>Tanggal Pesan</th>
-                                <th>Tanggal Kembali</th>
-                                <th>Nama Atasan</th>
-                                <th>Tanggal Disetujui</th>
-                                <th>Aksi</th>
-                            </tr>
-                            <?php $nomor = 1;
-                             foreach ($disetujui as $k =>$values) : ?>
-                             <form name="dipesan" method="POST" action="/menuadmin/prosessetuju/<?= $values->id_setuju; ?>" >
-                                <tr>
-                                    <th scope="row"><?= $nomor++; ?></th>
-                                    <td><input type="hidden" name="kendaraan" value="<?= $values->id_kendaraan; ?>"><?= $values->nama_kendaraan; ?></td>
-                                    <td><?= $values->no_hp; ?></td>
-                                    <td><?= $values->tgl_pesan; ?></td>
-                                    <td><?= $values->tgl_kembali; ?></td>
-                                    <td><?= $values->nama_user; ?></td>
-                                    <td><?= $values->tgl_disetujui;  ?></td>
-                                    <td><button type="submit"  class="btn btn-success">Kembalikan Kendaraan</button></td>
-                                 </tr>
-                             </form>
-                            <?php endforeach; ?>
-                        </table> 
-                        </div>
+                        <!-- Content Column isi -->
+                        <form name="twisata" method="POST" action="/menuadmin/updatedriver/<?= $driver['id_driver']; ?>">
+                <table class="table">
+                    <tr>
+                        <td>Nama Driver</td>
+                        <td>&nbsp;:&nbsp;</td>
+                        <td><input type="text" name="nama" class="form-control" required autocomplete="off" autofocus value="<?= $driver['nama_driver']; ?>"></td>
+                    </tr>
+                    <tr>
+                        <td>Nomor HP</td>
+                        <td>&nbsp;:&nbsp;</td>
+                        <td><input type="text" name="no" class="form-control" required autocomplete="off" value="<?= $driver['no_hp']; ?>"></td>
+                    </tr>
+             <tr>
+                        <td colspan="3"><input type="submit" name="tbh" Value="Edit" class="btn btn-success"></td>
+                    </tr>
+                </table>
+            </form>
                     </div>
 
                 </div>

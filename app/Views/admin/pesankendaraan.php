@@ -203,7 +203,7 @@
                     <tr>
                         <td>Tanggal Pesan</td>
                         <td>&nbsp;:&nbsp;</td>
-                        <td><input type="date" name="tgl_pesan" class="form-control" required autocomplete="off">
+                        <td><input type="text" name="tgl_pesan" class="form-control" required autocomplete="off" value="<?php echo date("Y-m-d"); ?>" readonly>
                             </td>
                     </tr>
                     <tr>

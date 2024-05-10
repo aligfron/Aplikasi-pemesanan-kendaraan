@@ -152,7 +152,7 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Data Driver</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Tambah Driver</a>
+                        <a href="/menuadmin/tbhdriver" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Tambah Driver</a>
                     </div>
 
                     <!-- Content Row -->
@@ -172,7 +172,12 @@
 
                         <!-- Content Column -->
                         <div class="mb-4">
-
+                        <br />
+                    <?php if (session()->getFlashdata('pesan')) : ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= session()->getFlashdata('pesan'); ?>
+                        </div>
+                    <?php endif ?>
                         <table  class="table table-bordered table-hover ">
                             <tr class="info" align="center">
                                 <th>#</th>
@@ -188,9 +193,9 @@
                                     <td><?= $k['no_hp']; ?></td>
 
                                     <td>
-                                        <a href="/datawisata/edit/<?= $k['id_driver']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="/menuadmin/editdriver/<?= $k['id_driver']; ?>" class="btn btn-warning btn-sm">Edit</a>
                                     </td>
-                                    <td><a href="<?= site_url('datawisata/delete/' . $k['id_driver']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a></td>
+                                    <td><a href="<?= site_url('menuadmin/delete_driver/' . $k['id_driver']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a></td>
 
 
                                 </tr>

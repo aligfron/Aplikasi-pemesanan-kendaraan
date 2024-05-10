@@ -152,8 +152,6 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Kendaraan Dipesan</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
                     <!-- Content Row -->
@@ -189,7 +187,7 @@
                                 <tr>
                                     <th scope="row"><?= $nomor++; ?></th>
                                     <td><?= $values->nama_kendaraan; ?></td>
-                                    <td><?= $values->no_hp; ?></td>
+                                    <td><?= $values->nama_driver; ?></td>
                                     <td><?= $values->tgl_pesan; ?></td>
                                     <td><?= $values->tgl_kembali; ?></td>
                                     <td><?= $values->nama_user; ?></td>

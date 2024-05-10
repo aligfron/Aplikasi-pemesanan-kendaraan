@@ -172,8 +172,14 @@
 
                         <!-- Content Column isi -->
                         <div class=" mb-4">
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Tambah Kendaraan</a><hr>
-                <table class="table table-bordered table-hover" >
+                        <a href="/menuadmin/tambahkendaraan" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Tambah Kendaraan</a><hr>
+                        <br />
+                    <?php if (session()->getFlashdata('pesan')) : ?>
+                        <div class="alert alert-success" role="alert">
+                            <?= session()->getFlashdata('pesan'); ?>
+                        </div>
+                    <?php endif ?>
+                        <table class="table table-bordered table-hover" >
                 <tr class="info" align="center">
                     <th>#</th>
                     <th>Nama Kendaraan</th>
@@ -190,9 +196,9 @@
                         <td><?= $k['jenis_kendaraan']; ?></td>
 
                         <td>
-                            <a href="/datawisata/edit/<?= $k['id_kendaraan']; ?>" class="btn btn-warning btn-sm">Edit</a>
+                            <a href="/menuadmin/edit/<?= $k['id_kendaraan']; ?>" class="btn btn-warning btn-sm">Edit</a>
                         </td>
-                        <td><a href="<?= site_url('datawisata/delete/' . $k['id_kendaraan']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a></td>
+                        <td><a href="<?= site_url('/menuadmin/delete_kendaraan/' . $k['id_kendaraan']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a></td>
 
 
                     </tr>

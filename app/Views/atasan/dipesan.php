@@ -21,7 +21,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/menuadmin/">
+                <a class="nav-link" href="/menuatasan/">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -34,39 +34,9 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-cog"></i>
-                    <span>Data</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Data Master:</h6>
-                        <a class="collapse-item" href="/menuadmin/datakendaraan">Data Kendaraan</a>
-                        <a class="collapse-item" href="/menuadmin/datadriver">Data Driver</a>
-                    </div>
-                </div>
-            </li>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
-                    <span>Pemesanan Kendaraan</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Pemesanan Kendaraan</h6>
-                        <a class="collapse-item" href="/menuadmin/pesankendaraan">Pesan Kendaraan</a>
-                        <a class="collapse-item" href="/menuadmin/dipesan">Kendaraan dipesan</a>
-                        <a class="collapse-item" href="/menuadmin/disetujui">Kendaraan disetujui</a>
-                    </div>
-                </div>
-            </li>
+
+
 
 
 
@@ -152,8 +122,6 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Kendaraan Dipesan</h1>
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
                     </div>
 
                     <!-- Content Row -->
@@ -173,7 +141,7 @@
 
                         <!-- Content Column -->
                         <div class=" mb-4">
-
+                        
                         <table class="table table-bordered table-hover" >
                             <tr class="info" align="center">
                                 <th>#</th>
@@ -183,23 +151,26 @@
                                 <th>Tanggal Kembali</th>
                                 <th>Nama Atasan</th>
                                 <th>Status</th>
+                                <th>Aksi</th>
                             </tr>
                             <?php $nomor = 1;
                             foreach ($pesan as $k =>$values) : ?>
+                            <form name="dipesan" method="POST" action="/menuatasan/setujui/<?= $values->id_pesanan; ?>" >
                                 <tr>
                                     <th scope="row"><?= $nomor++; ?></th>
-                                    <td><?= $values->nama_kendaraan; ?></td>
-                                    <td><?= $values->no_hp; ?></td>
-                                    <td><?= $values->tgl_pesan; ?></td>
-                                    <td><?= $values->tgl_kembali; ?></td>
-                                    <td><?= $values->nama_user; ?></td>
+                                    <td><input type="hidden" name="kendaraan" value="<?= $values->id_kendaraan; ?>"><?= $values->nama_kendaraan; ?></td>
+                                    <td><input type="hidden" name="driver" value="<?= $values->id_driver; ?>"><?= $values->nama_driver; ?></td>
+                                    <td><input type="hidden" name="tgl_pesan" value="<?= $values->tgl_pesan; ?>"><?= $values->tgl_pesan; ?></td>
+                                    <td><input type="hidden" name="tgl_kembali" value="<?= $values->tgl_kembali; ?>"><?= $values->tgl_kembali; ?></td>
+                                    <td><input type="hidden" name="userid" value="<?= $values->userid; ?>"><?= $values->nama_user; ?></td>
                                     <td>Belum Disetujui</td>
+                                    <td><button type="submit" class="btn btn-success">Setujui</button></td>
 
                                     
-                                </tr>
+                                </tr>  
+                        </form>
                             <?php endforeach; ?>
-                        </table>    
-
+                        </table>  
                             
                         </div>
                     </div>
